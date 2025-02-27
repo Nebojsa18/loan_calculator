@@ -4,7 +4,10 @@
  */
 package com.nebojsa.loan_calculator.controller;
 
+import com.nebojsa.loan_calculator.dto.InstallmentPlanDto;
 import com.nebojsa.loan_calculator.dto.LoanRequestDto;
+import com.nebojsa.loan_calculator.model.LoanRequest;
+import com.nebojsa.loan_calculator.service.InstallmentPlanService;
 import com.nebojsa.loan_calculator.service.LoanRequestService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+
 
 /**
  *
@@ -26,10 +31,16 @@ public class LoanController {
     @Autowired
     private LoanRequestService loanRequestService;
     
+    @Autowired
+    private InstallmentPlanService installmentPlanService;
+    
     
     @PostMapping("/calculate")
-    public ResponseEntity<LoanRequestDto> createLoanRequest(@Valid @RequestBody LoanRequestDto loanRequestDto) {
-        LoanRequestDto createdLoanRequest = loanRequestService.createLoanRequest(loanRequestDto);
-        return ResponseEntity.ok(createdLoanRequest);
+    public ResponseEntity<InstallmentPlanDto> calculateLoan(@Valid @RequestBody LoanRequestDto loanRequestDto) {
+        LoanRequest createdLoanRequest = loanRequestService.createLoanRequest(loanRequestDto);
+        
+        InstallmentPlanDto installmentPlanDto = installmentPlanService.calculateInstallmentPlan(createdLoanRequest);
+//        installmentPlanService.calculateInstallmentPlan(createdLoanRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(installmentPlanDto);
     }
 }

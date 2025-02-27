@@ -17,17 +17,16 @@ public class InstallmentPlanDto {
 
     private double totalInterest;
     
-    private LoanRequestDto loanRequest;
+//    private LoanRequestDto loanRequest;
     
     private List<PlanItemDto> planItems;
 
     public InstallmentPlanDto() {
     }
 
-    public InstallmentPlanDto(double totalPayment, double totalInterest, LoanRequestDto loanRequest, List<PlanItemDto> planItems) {
+    public InstallmentPlanDto(double totalPayment, double totalInterest, List<PlanItemDto> planItems) {
         this.totalPayment = totalPayment;
         this.totalInterest = totalInterest;
-        this.loanRequest = loanRequest;
         this.planItems = planItems;
     }
 
@@ -47,14 +46,6 @@ public class InstallmentPlanDto {
         this.totalInterest = totalInterest;
     }
 
-    public LoanRequestDto getLoanRequest() {
-        return loanRequest;
-    }
-
-    public void setLoanRequest(LoanRequestDto loanRequest) {
-        this.loanRequest = loanRequest;
-    }
-
     public List<PlanItemDto> getPlanItems() {
         return planItems;
     }
@@ -66,10 +57,9 @@ public class InstallmentPlanDto {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.totalPayment) ^ (Double.doubleToLongBits(this.totalPayment) >>> 32));
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.totalInterest) ^ (Double.doubleToLongBits(this.totalInterest) >>> 32));
-        hash = 89 * hash + Objects.hashCode(this.loanRequest);
-        hash = 89 * hash + Objects.hashCode(this.planItems);
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.totalPayment) ^ (Double.doubleToLongBits(this.totalPayment) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.totalInterest) ^ (Double.doubleToLongBits(this.totalInterest) >>> 32));
+        hash = 17 * hash + Objects.hashCode(this.planItems);
         return hash;
     }
 
@@ -91,17 +81,16 @@ public class InstallmentPlanDto {
         if (Double.doubleToLongBits(this.totalInterest) != Double.doubleToLongBits(other.totalInterest)) {
             return false;
         }
-        if (!Objects.equals(this.loanRequest, other.loanRequest)) {
-            return false;
-        }
         return Objects.equals(this.planItems, other.planItems);
     }
 
     @Override
     public String toString() {
-        return "InstallmentPlanDto{" + "totalPayment=" + totalPayment + ", totalInterest=" + totalInterest + ", loanRequest=" + loanRequest + ", planItems=" + planItems + '}';
+        return "InstallmentPlanDto{" + "totalPayment=" + totalPayment + ", totalInterest=" + totalInterest + ", planItems=" + planItems + '}';
     }
-
+    
+    
+    
     
     
     

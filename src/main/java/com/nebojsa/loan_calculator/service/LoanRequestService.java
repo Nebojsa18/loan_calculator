@@ -21,15 +21,16 @@ public class LoanRequestService {
     
     @Autowired
     private LoanRequestRepository loanRequestRepository;
+    
     @Autowired  
     private LoanRequestMapper loanRequestMapper;
     
-    public LoanRequestDto createLoanRequest(LoanRequestDto loanRequestDto){
+    public LoanRequest createLoanRequest(LoanRequestDto loanRequestDto){
         LoanRequest loanRequest = loanRequestMapper.toEntity(loanRequestDto);
         
         
-//        loanRequest = loanRequestRepository.save(loanRequest);
-        return loanRequestMapper.toDto(loanRequest);
+        return loanRequestRepository.save(loanRequest);
+        
     }
     
 }

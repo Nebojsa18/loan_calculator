@@ -162,9 +162,10 @@ public class PlanItem {
         return Objects.equals(this.installmentPlan, other.installmentPlan);
     }
 
+    //instalmentPlan id is added because of avoiding infinite loop
     @Override
     public String toString() {
-        return "PlanItem{" + "id=" + id + ", installmentPlan=" + installmentPlan + ", month=" + month + ", monthlyPayment=" + monthlyPayment + ", principalAmount=" + principalAmount + ", interestAmount=" + interestAmount + ", remainingAmount=" + remainingAmount + '}';
+        return "PlanItem{" + "id=" + id + ", installmentPlan=" + installmentPlan.getId() + ", month=" + month + ", monthlyPayment=" + monthlyPayment + ", principalAmount=" + principalAmount + ", interestAmount=" + interestAmount + ", remainingAmount=" + remainingAmount + '}';
     }
     
     
