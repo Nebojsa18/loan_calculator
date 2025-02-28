@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name="intallment_plan")
+@Table(name="installment_plan")
 public class InstallmentPlan {
     
     @Id

@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name="intallment_plan_item")
+@Table(name="installment_plan_item")
 public class PlanItem {
     
     @Id
@@ -60,6 +60,14 @@ public class PlanItem {
         this.remainingAmount = remainingAmount;
     }
 
+    public PlanItem(int month, double monthlyPayment, double principalAmount, double interestAmount, double remainingAmount) {
+        this.month = month;
+        this.monthlyPayment = monthlyPayment;
+        this.principalAmount = principalAmount;
+        this.interestAmount = interestAmount;
+        this.remainingAmount = remainingAmount;
+    }
+    
     public Long getId() {
         return id;
     }
