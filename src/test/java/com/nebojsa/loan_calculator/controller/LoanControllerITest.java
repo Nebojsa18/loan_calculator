@@ -6,12 +6,12 @@ package com.nebojsa.loan_calculator.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nebojsa.loan_calculator.model.LoanRequest;
-import com.nebojsa.loan_calculator.repository.LoanRequestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -31,9 +31,6 @@ public class LoanControllerITest {
     private MockMvc mockMvc;
     
     @Autowired
-    private LoanRequestRepository loanRequestRepository;
-    
-    @Autowired
     private ObjectMapper objectMapper;
     
     LoanRequest loanRequest;
@@ -43,14 +40,18 @@ public class LoanControllerITest {
     public void calculateLoan() throws Exception{
     
         loanRequest=new LoanRequest();
-        loanRequest.setAmount(10000.0);
+        loanRequest.setAmount(12330.0);
         loanRequest.setInterestRate(5.0);
         loanRequest.setNum_of_months(10);
         
         mockMvc.perform(post("/loan-calculator/calculate")
             .content(objectMapper.writeValueAsString(loanRequest))
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.totalPayment").exists())
+            .andExpect(jsonPath("$.totalInterest").exists())
+            .andExpect(jsonPath("$.planItems").exists())
+            .andExpect(jsonPath("$.planItems.length()").value(10));
         
     }
     
@@ -59,13 +60,16 @@ public class LoanControllerITest {
     
         loanRequest=new LoanRequest();
         //without ammount
-        loanRequest.setInterestRate(5.0);
-        loanRequest.setNum_of_months(10);
+//        loanRequest.setInterestRate(5.0);
+//        loanRequest.setNum_of_months(10);
         
         mockMvc.perform(post("/loan-calculator/calculate")
             .content(objectMapper.writeValueAsString(loanRequest))
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.amount").value("Amount must be greater than 0"))
+            .andExpect(jsonPath("$.num_of_months").value("Number of months must be greater than 0"))
+            .andExpect(jsonPath("$.interestRate").value("Interest rate must be greater than 0"));
         
     }
     
